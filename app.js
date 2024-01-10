@@ -16,7 +16,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json({ limit: "500MB" })); // Tăng giới hạn kích thước lên 500MB
 
 // Định tuyến các API endpoint
-require("./src/app/Controllers/DemoController")(app);
 require("./src/app/Controllers/CommonController")(app);
 require("./src/app/Controllers/AuthController")(app);
 require("./src/app/Controllers/UserController")(app);
