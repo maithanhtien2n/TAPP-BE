@@ -11,19 +11,19 @@ module.exports = {
 
   onResponse: (res, result) => ({
     ok: (message) => {
-      return res.status(+message.sttCode || 200).json({
+      return res.status(+message?.sttCode || 200).json({
         success: true,
-        statusCode: +message.sttCode || 200,
-        statusValue: message.sttValue || "OK",
+        statusCode: +message?.sttCode || 200,
+        statusValue: message?.sttValue || "OK",
         executeDate: new Date(),
         data: result || null,
       });
     },
     badRequest: (message) => {
-      return res.status(+message.sttCode || 400).json({
+      return res.status(+message?.sttCode || 400).json({
         success: false,
-        statusCode: +message.sttCode || 400,
-        statusValue: message.sttValue || message || "Lỗi call api!",
+        statusCode: +message?.sttCode || 400,
+        statusValue: message?.sttValue || message || "Lỗi call api!",
         executeDate: new Date(),
         data: null,
       });
