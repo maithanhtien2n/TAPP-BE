@@ -15,7 +15,7 @@ module.exports = (app) => {
     async (req, res) => {
       try {
         // Các hàm xử lý request
-        const request = checkNullRequest(req.body, ["userId", "contents"]); // Yêu cầu phải có các trường này trong body
+        const request = checkNullRequest(req.body, []); // Yêu cầu phải có các trường này trong body
 
         // Hàm xử lý logic và trả ra kết quả
         const result = await VirtualAssistantService.chat(request);
