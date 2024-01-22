@@ -23,21 +23,11 @@ module.exports = {
         throwError(401, "Bot chưa được cấu hình!");
       }
 
-      const messages = [
-        {
-          role: "system",
-          content: virtualAssistant.system,
-        },
-        {
-          role: "assistant",
-          content:
-            virtualAssistant.assistant + "(Trợ lý ảo do tapp.com tạo ra.)",
-        },
-        {
-          role: "user",
-          content: data.content,
-        },
-      ];
+      let messages = [{ role: "system", content: virtualAssistant.system }];
+
+      for (const item of data.contents) {
+        messages.push(item);
+      }
 
       const result = await chatBot(messages);
 
