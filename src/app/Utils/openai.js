@@ -1,9 +1,9 @@
 const OpenAI = require("openai");
 require("dotenv").config();
 
-const openai = new OpenAI(
-  "sk-zFq@kW5CLqW1@0QJPI@eSNHT3BlbkF@JdtOfDLzt@XBtM3cBdZryu".replace(/@/g, "")
-);
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY.replace(/@/g, ""),
+});
 
 module.exports = {
   chatBot: async (messages) => {
