@@ -1,6 +1,6 @@
 require("dotenv").config();
 
-const { onChatBot, throwError, isObjectId } = require("../Utils/index");
+const { chatBot, throwError, isObjectId } = require("../Utils/index");
 const { checkData } = require("./CommonService");
 
 const { VirtualAssistant } = require("../Models/VirtualAssistantModel");
@@ -39,7 +39,7 @@ module.exports = {
         },
       ];
 
-      const result = await onChatBot(messages);
+      const result = await chatBot(messages);
 
       return result;
     } catch (error) {
@@ -53,6 +53,7 @@ module.exports = {
         if (!value) {
           throwError(401, "Bản ghi không tồn tại!");
         }
+
         const virtualAssistant = await VirtualAssistant.findOne({
           userId: value._id,
         });
@@ -64,7 +65,7 @@ module.exports = {
     }
   },
 
-  saveTrain: async ({ userId, assistant, system }) => {
+  saveTrain: async ({ userId, system }) => {
     try {
       return checkData(userId, User, async (value) => {
         const virtualAssistant = await VirtualAssistant.findOne({
@@ -73,12 +74,12 @@ module.exports = {
         if (virtualAssistant) {
           const virtualAssistantUpdate = await VirtualAssistant.updateOne(
             { userId: value._id },
-            { assistant, system }
+            { system }
           );
           return virtualAssistantUpdate;
         } else {
           const virtualAssistantCreate = await VirtualAssistant.create({
-            assistant,
+            userId: value._id,
             system,
           });
           return virtualAssistantCreate;

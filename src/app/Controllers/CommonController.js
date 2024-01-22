@@ -1,5 +1,5 @@
 module.exports = (app) => {
-  const CommonService = require("../Services/CommonService");
+  const CommonService = require("../Services/DemoService");
   const { onResponse, checkNullRequest } = require("../Utils/index");
 
   const controllerName = "common";

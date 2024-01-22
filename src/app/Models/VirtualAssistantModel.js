@@ -6,7 +6,6 @@ const VirtualAssistant = mongoose.model(
   new Schema(
     {
       userId: { type: Schema.Types.ObjectId, ref: "User" },
-      assistant: { type: String },
       system: { type: String },
     },
     { timestamps: true }
