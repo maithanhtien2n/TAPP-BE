@@ -13,7 +13,7 @@ const io = socketIo(server, { cors: {} });
 app.use(cors());
 
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json({ limit: "1GB" })); // Tăng giới hạn kích thước lên 900MB
+app.use(bodyParser.json({ limit: "3072MB" })); // Tăng giới hạn kích thước lên 900MB
 
 // Định tuyến các API endpoint
 require("./src/app/Controllers/CommonController")(app);
