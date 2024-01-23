@@ -19,20 +19,23 @@ module.exports = {
 
   getOneBankAccount: async (bankAccountId) => {
     try {
-      return checkData(bankAccountId, BankAccount, (value) =>
-        cloneObjectWithoutFields(value, ["__v"])
-      );
+      // return checkData(bankAccountId, BankAccount, (value) =>
+      //   cloneObjectWithoutFields(value, ["__v"])
+      // );
+
+      const bankAccount = await BankAccount.find();
+      return bankAccount[0];
     } catch (error) {
       throw error;
     }
   },
 
-  saveOneBankAccount: async (bankAccountId, data) => {
+  saveOneBankAccount: async (data) => {
     try {
       const updateBankAccount = await CommonService.uploadFile(
         BankAccount,
         { field: "imgQr", location: "img-common/" },
-        bankAccountId,
+        data?._id,
         data
       );
 

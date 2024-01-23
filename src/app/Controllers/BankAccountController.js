@@ -49,20 +49,16 @@ module.exports = (app) => {
       try {
         // Các hàm xử lý request
         const request = checkNullRequest(req.body, [
-          "imgQr",
           "bankName",
           "accountName",
           "accountNumber",
         ]); // Yêu cầu phải có các trường này trong body
 
         // Hàm xử lý logic và trả ra kết quả
-        const result = await BankAccountService.saveOneBankAccount(
-          req.query.bankAccountId,
-          {
-            ...request,
-            host: req.headers.host,
-          }
-        );
+        const result = await BankAccountService.saveOneBankAccount({
+          ...request,
+          host: req.headers.host,
+        });
 
         // Hàm trả về response cho người dùng
         onResponse(res, result).ok({ sttValue: "Lưu dữ liệu thành công!" });
