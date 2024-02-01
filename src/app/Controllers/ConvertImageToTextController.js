@@ -1,7 +1,10 @@
 module.exports = (app) => {
   const ConvertImageToTextService = require("../Services/ConvertImageToTextService");
   const { onResponse, checkNullRequest } = require("../Utils/index");
-  const { onRouteCustom } = require("../Middlewares/index");
+  const {
+    onRouteCustom,
+    authenticateProTool,
+  } = require("../Middlewares/index");
 
   const controllerName = "convert-image-to-text";
   const onRoute = (method, route, handler, accuracy) => {
@@ -12,7 +15,9 @@ module.exports = (app) => {
   onRoute("post", "", async (req, res) => {
     try {
       // Các hàm xử lý request
-      const request = checkNullRequest(req.body, ["image", "language"]); // Yêu cầu phải có các trường này trong body
+      const requestHeaders = checkNullRequest(req.headers, ["toolid"]);
+      await authenticateProTool(requestHeaders.toolid, req.data.isUserPro);
+      const request = checkNullRequest(req.body, ["image", "language"]);
 
       // Hàm xử lý logic và trả ra kết quả
       const result = await ConvertImageToTextService.convert(request);

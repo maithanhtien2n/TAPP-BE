@@ -44,11 +44,9 @@ module.exports = {
       return {
         userData: cloneObjectWithoutFields(user, ["password", "__v"]),
         accessToken: jwt.sign(
-          { userId: user._id, role: user.role },
+          { userId: user._id, role: user.role, isUserPro: user.isUserPro },
           process.env.JWT_SECRET,
-          {
-            expiresIn: "2h",
-          }
+          { expiresIn: "2h" }
         ),
       };
     } catch (error) {

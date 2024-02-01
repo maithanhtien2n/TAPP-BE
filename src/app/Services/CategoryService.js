@@ -1,7 +1,7 @@
 require("dotenv").config();
 
 const { throwError } = require("../Utils/index");
-const { checkData } = require("./CommonService");
+const { uploadFile, checkData } = require("./CommonService");
 
 const { Tool } = require("../Models/ToolModel");
 const { default: mongoose } = require("mongoose");
@@ -24,21 +24,21 @@ module.exports = {
     }
   },
 
-  createTool: async (data) => {
+  saveTool: async (toolId, data) => {
     try {
-      const tool = await Tool.create(data);
-      return tool;
-    } catch (error) {
-      throw error;
-    }
-  },
+      const tool = await Tool.findOne({ routeName: data.routeName });
+      if (tool && !toolId) {
+        throwError(400, "Tên đường dẫn đã tồn tại!");
+      }
 
-  updateTool: async (toolId, data) => {
-    try {
-      return checkData(toolId, Tool, async () => {
-        const toolUpdate = await Tool.updateOne({ _id: toolId }, data);
-        return toolUpdate;
-      });
+      const saveTool = await uploadFile(
+        Tool,
+        { field: "image", location: "img-tool/" },
+        toolId,
+        data
+      );
+
+      return saveTool;
     } catch (error) {
       throw error;
     }
@@ -55,7 +55,7 @@ module.exports = {
     }
   },
 
-  PlusAmountTool: async (toolId) => {
+  plusAmountTool: async (toolId) => {
     try {
       return checkData(toolId, Tool, async (value) => {
         const toolUpdate = await Tool.updateOne(

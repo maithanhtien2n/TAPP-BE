@@ -1,8 +1,7 @@
 require("dotenv").config();
 
 const { throwError, cloneObjectWithoutFields } = require("../Utils/index");
-const { checkData } = require("./CommonService");
-const CommonService = require("./CommonService");
+const { uploadFile, checkData } = require("./CommonService");
 
 const { User } = require("../Models/UserModel");
 const { default: mongoose } = require("mongoose");
@@ -60,7 +59,7 @@ module.exports = {
 
   saveOneUser: async (userId, data) => {
     try {
-      const updateUser = await CommonService.uploadFile(
+      const updateUser = await uploadFile(
         User,
         { field: "avatar", location: "avatar-user/" },
         userId,

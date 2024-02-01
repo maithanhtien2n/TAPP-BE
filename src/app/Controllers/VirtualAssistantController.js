@@ -1,7 +1,10 @@
 module.exports = (app) => {
   const VirtualAssistantService = require("../Services/VirtualAssistantService");
   const { onResponse, checkNullRequest } = require("../Utils/index");
-  const { onRouteCustom } = require("../Middlewares/index");
+  const {
+    onRouteCustom,
+    authenticateProTool,
+  } = require("../Middlewares/index");
 
   const controllerName = "virtual-assistant";
   const onRoute = (method, route, handler, accuracy) => {
@@ -15,7 +18,7 @@ module.exports = (app) => {
     async (req, res) => {
       try {
         // Các hàm xử lý request
-        const request = checkNullRequest(req.body, ["userId", "contents"]); // Yêu cầu phải có các trường này trong body
+        const request = checkNullRequest(req.body, ["userId", "contents"]);
 
         // Hàm xử lý logic và trả ra kết quả
         const result = await VirtualAssistantService.chat(request);
@@ -34,6 +37,10 @@ module.exports = (app) => {
   // Api lấy nội dung đào tạo bot
   onRoute("get", "/train/:userId", async (req, res) => {
     try {
+      // Các hàm xử lý request
+      const requestHeaders = checkNullRequest(req.headers, ["toolid"]);
+      await authenticateProTool(requestHeaders.toolid, req.data.isUserPro);
+
       // Hàm xử lý logic và trả ra kết quả
       const result = await VirtualAssistantService.getTrain(req.params.userId);
 
@@ -50,7 +57,9 @@ module.exports = (app) => {
   onRoute("post", "/train", async (req, res) => {
     try {
       // Các hàm xử lý request
-      const request = checkNullRequest(req.body, ["userId"]); // Yêu cầu phải có các trường này trong body
+      const requestHeaders = checkNullRequest(req.headers, ["toolid"]);
+      await authenticateProTool(requestHeaders.toolid, req.data.isUserPro);
+      const request = checkNullRequest(req.body, ["userId"]);
 
       // Hàm xử lý logic và trả ra kết quả
       const result = await VirtualAssistantService.saveTrain(request);

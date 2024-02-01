@@ -7,8 +7,9 @@ const Tool = mongoose.model(
     {
       image: { type: String, required: true },
       title: { type: String, required: true },
-      amount: { type: Number, required: true, default: 0 },
       routeName: { type: String, required: true },
+      isProTool: { type: Boolean, required: true },
+      amount: { type: Number, required: true, default: 0 },
     },
     { timestamps: true }
   )

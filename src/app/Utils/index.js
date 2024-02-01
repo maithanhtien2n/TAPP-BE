@@ -31,12 +31,18 @@ module.exports = {
   }),
 
   checkNullRequest: (data, arrValue) => {
+    let keys = [];
+
     for (const key of arrValue) {
       if (!data[key]) {
-        throw {
-          sttValue: "Lỗi code, không kiểm tra null!",
-        };
+        keys.push(key);
       }
+    }
+
+    if (keys.length > 0) {
+      throw {
+        sttValue: `Lỗi thiếu field bắt buộc: ${keys}`,
+      };
     }
 
     return data;

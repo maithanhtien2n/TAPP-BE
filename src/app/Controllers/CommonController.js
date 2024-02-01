@@ -24,4 +24,5 @@ module.exports = (app) => {
   };
   onApiOpenFile("/avatar-user");
   onApiOpenFile("/img-common");
+  onApiOpenFile("/img-tool");
 };

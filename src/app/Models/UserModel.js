@@ -13,6 +13,7 @@ const User = mongoose.model(
       phoneNumber: { type: String, required: false, default: "" },
       gender: { type: String, required: false, default: "" },
       moneyBalance: { type: Number, required: true, default: 0 },
+      isUserPro: { type: Boolean, required: true, default: false },
       status: { type: String, required: false, default: "ACTIVE" },
     },
     { timestamps: true }

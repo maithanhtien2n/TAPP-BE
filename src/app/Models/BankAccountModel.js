@@ -9,6 +9,7 @@ const BankAccount = mongoose.model(
       bankName: { type: String, required: true },
       accountName: { type: String, required: true },
       accountNumber: { type: Number, required: true },
+      note: { type: String, required: true, default: "" },
     },
     { timestamps: true }
   )

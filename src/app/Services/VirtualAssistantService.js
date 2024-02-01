@@ -1,4 +1,5 @@
 require("dotenv").config();
+const { JSDOM } = require("jsdom");
 
 const { chatBot, throwError, isObjectId } = require("../Utils/index");
 const { checkData } = require("./CommonService");
@@ -23,7 +24,11 @@ module.exports = {
         throwError(401, "Bot chưa được cấu hình!");
       }
 
-      let messages = [{ role: "system", content: virtualAssistant.system }];
+      // Sử dụng DOMParser để phân tích văn bản HTML
+      const dom = new JSDOM(virtualAssistant.system);
+      const content = dom.window.document.body.textContent;
+
+      let messages = [{ role: "system", content }];
 
       for (const item of data.contents) {
         messages.push(item);
